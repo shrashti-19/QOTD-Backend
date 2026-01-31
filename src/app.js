@@ -19,4 +19,8 @@ app.get('/', (req, res) => {
 const questionRoutes = require('./routes/questionRoutes');
 app.use('/api/questions', questionRoutes);
 
+
+const submissionRoutes = require('./routes/submissionRoutes');
+app.use('/api/submissions', submissionRoutes);
+
 module.exports = app;
