@@ -16,4 +16,7 @@ app.get('/', (req, res) => {
   res.send('QOTD API Running 🚀');
 });
 
+const questionRoutes = require('./routes/questionRoutes');
+app.use('/api/questions', questionRoutes);
+
 module.exports = app;
