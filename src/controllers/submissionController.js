@@ -30,3 +30,44 @@ exports.submitAnswer = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
+
+//submission statistics
+exports.getQuestionStats = async (req, res) => {
+  try {
+    const { questionId } = req.params;
+
+    const totalAttempts = await Submission.countDocuments({ question: questionId });
+    const correctAttempts = await Submission.countDocuments({ question: questionId, result: "Correct" });
+
+    const successRate = totalAttempts === 0 ? 0 : ((correctAttempts / totalAttempts) * 100).toFixed(2);
+
+    res.status(200).json({
+      totalAttempts,
+      correctAttempts,
+      successRate: `${successRate}%`
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+
+exports.getLeaderboard = async (req, res) => {
+  try {
+    const { questionId } = req.params;
+
+    const leaderboard = await Submission.find({ question: questionId, result: "Correct" })
+      .sort({ createdAt: 1 }) // earliest first
+      .limit(10);
+
+    res.status(200).json({
+      message: "Top performers",
+      leaderboard
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
