@@ -1,0 +1,19 @@
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+
+const app = express();
+
+// Connect Database
+connectDB();
+
+// Middlewares
+app.use(cors());
+app.use(express.json());
+
+// Test Route
+app.get('/', (req, res) => {
+  res.send('QOTD API Running 🚀');
+});
+
+module.exports = app;
