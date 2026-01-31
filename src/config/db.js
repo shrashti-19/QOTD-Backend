@@ -9,5 +9,5 @@ const connectDB = async () => {
     process.exit(1);
   }
 };
-console.log("Mongo URI:", process.env.MONGO_URI);
+//console.log("Mongo URI:", process.env.MONGO_URI);
 module.exports = connectDB;
