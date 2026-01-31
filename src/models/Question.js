@@ -5,6 +5,10 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  hints: {
+  type: [String],
+  default: []
+  },
   difficulty: {
     type: String,
     enum: ['Easy', 'Medium', 'Hard'],

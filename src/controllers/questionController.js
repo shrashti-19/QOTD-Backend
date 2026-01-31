@@ -42,3 +42,18 @@ exports.createQuestion = async (req, res) => {
     res.status(400).json({ message: "Error creating question", error: error.message });
   }
 };
+
+
+exports.getHints = async (req, res) => {
+  try {
+    const { questionId } = req.params;
+
+    const question = await Question.findById(questionId).select('hints');
+
+    if (!question) return res.status(404).json({ message: "Question not found" });
+
+    res.status(200).json({ hints: question.hints });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
